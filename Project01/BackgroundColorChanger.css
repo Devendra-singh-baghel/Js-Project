@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.containor{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.box{
+    background-color: gainsboro;
+    width: 500px;
+    height: 400px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+h1{
+    margin: 30px 0;
+}
+
+.colors{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.button{
+    width: 80px;
+    height: 80px;
+    margin: 10px 20px;
+    border-radius: 10px;
+}
+
+p{
+    margin: 30px;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: cursive;
+}
+
+#yellow{
+    background-color: yellow;
+}
+#red{
+    background-color: red;
+}
+#black{
+    background-color: black;
+}
+#purple{
+    background-color: purple;
+}
+#palegreen{
+    background-color: palegreen;
+}
+#lightblue{
+    background-color: lightblue;
+}
+#pink{
+    background-color: pink;
+}
+#blue{
+    background-color: blue;
+}
