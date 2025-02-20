@@ -13,7 +13,6 @@ button.addEventListener('click', (e) => {
         let incomeValue = parseFloat(income.value);
 
         if (isNaN(incomeValue) || incomeValue <= 0) {
-            // result.innerHTML = `Please enter valid amount.`;
             result.appendChild(document.createTextNode(`Please Enter Valid Amount.`));
         }
         else {
@@ -23,22 +22,11 @@ button.addEventListener('click', (e) => {
                 maximumFractionDigits: 2
             });
 
-            /*
-            When we use toLocaleString('en-IN'), it formats the number in the Indian numbering system, 
-            but it removes decimal places if they are zero.
-    
-            So we can use toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
-            to force two decimal places, even if they are zero.
-            */
-
             if (incomeValue <= 1200000) {
-                // result.innerHTML = `${payableTax}`;  //Right code but not optimized.
 
                 result.appendChild(document.createTextNode(`Your Payable Tax Amount is : ${payableTax} ₹`));
             }
             else {
-                // result.innerHTML = `${payableTax}`;  //Right code but not optimized.
-                // console.log(`Your Payable Tax Amount is : ${payableTax} ₹`);
                 result.appendChild(document.createTextNode(`Your Payable Tax Amount is : ${payableTax} ₹`));
             }
         }
