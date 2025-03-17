@@ -17,23 +17,30 @@ function generatePassword(length, uppers, numbers, symbols) {
     };
 
     let charSet = options.lowerSet;
+    let requiredChars = [];
 
     if (uppers) {
         charSet += options.upperSet;
+        requiredChars.push(options.upperSet[Math.floor(Math.random() * options.upperSet.length)]);
     }
     if (numbers) {
         charSet += options.numSet;
+        requiredChars.push(options.numSet[Math.floor(Math.random() * options.numSet.length)]);
     }
     if (symbols) {
         charSet += options.symbolSet;
+        requiredChars.push(options.symbolSet[Math.floor(Math.random() * options.symbolSet.length)]);
     }
 
-    let password = "";
+    let password = requiredChars.join("");
 
     for (let i = 0; i < length; i++) {
         let indx = Math.floor(Math.random() * charSet.length);
         password += charSet[indx];
     }
+
+    password = password.split("").sort(() => 0.5 - Math.random()).join("");
+
     return password;
 }
 
@@ -43,11 +50,19 @@ function passwordInstruction() {
     const numbers = nums.checked;
     const symbols = special.checked;
     
-    if (length) {
+    if (!length) {
+        output.textContent = "Please Enter Password Length!";
+        output.style.color = "red";
+    }else if(length<8){
+        output.textContent = "Password Length Must Be At Least 8 Characters!";
+        output.style.color = "red";
+        len.value = 8;
+        return
+    }
+    else {
         const password = generatePassword(length, uppers, numbers, symbols);
         output.textContent = password;
-    } else {
-        output.textContent = "Please Enter Valid Length!";
+        output.style.color = "";
     }
 }
 
@@ -56,6 +71,7 @@ function resetInstruction() {
     upper.checked = false;
     nums.checked = false;
     special.checked = false;
+    output.style.color = "";
     output.textContent = "Your Password Will Appear Here!";
 }
 
