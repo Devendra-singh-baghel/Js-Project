@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background: linear-gradient(to right, #6b6a6a, #0d131f);
+    color: #020b47;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(to right, #6586bd, #4ba4a6);
+    height: 450px;
+    width: 60%;
+    max-width: 400px;
+    padding: 30px;
+    border: none;
+    border-radius: 10px;
+    filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.8));
+}
+
+.input-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    height: 200px;
+    width: 80%;
+    border: none;
+    border-radius: 20px;
+}
+
+input{
+    height: 45px;
+    width: 300px;
+    margin: 5px;
+    border: none;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 25px;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
+}
+
+input::placeholder {
+    color: #9c9b9b;
+    font-size: 20px;
+}
+
+label{
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    height: 45px;
+    width: 150px;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
+    transition: background-color 0.5s ease;
+}
+
+.result{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40px;
+    margin: 10px 0px;
+    font-size: 30px;
+    filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.8));
+}
+
+#generate{
+    margin: 20px 0px 10px 0px;
+    background-color: #1a8812;
+    color: #ffffff;
+}
+
+#generate:hover{
+    background-color: #085f02;
+}
+
+#reset{
+    margin-top: 10px ;
+    background-color: #9a1a1a;
+    color: #ffffff;
+}
+
+#reset:hover{
+    background-color: #6d0303;
+}
