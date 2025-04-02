@@ -3,9 +3,7 @@ My Journey of Learning JavaScript Through Projects.
 <br>
 Author - Devendra Singh Baghel
 <br>
-<br>
 List of Projects: 
-<br>
 <br>
 01. BackgroundColorChanger
 <br>
