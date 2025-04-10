@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(180deg, #adc4e9, #2c2f88);
+}
+
+section {
+    display: flex;
+    flex-shrink: 1;
+    justify-content: center;
+    align-items: center;
+    width: 490px;
+    margin: 5% auto;
+    padding: 15px;
+    background-color: #728998;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.container {
+    display: flex;
+    flex-shrink: 1;
+    flex-direction: column;
+    justify-content: center;
+    width: 450px;
+    padding: 20px;
+    margin: auto;
+    background-color: #555;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+    color: #e8e4e4;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.input-box {
+    display: flex;
+    gap: 6px;
+}
+
+.input-box input {
+    width: 83%;
+    flex-grow: 1;
+    padding: 9px 10px;
+    font-size: 17px;
+    color: #dadada;
+    border: none;
+    border-radius: 4px;
+    background-color: #303030;
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.input-box input::placeholder {
+    color: #919090;
+}
+
+.input-box input:focus {
+    background-color: #252525;
+}
+
+.input-box .add-btn {
+    border: none;
+    border-radius: 4px;
+    background-color: #6928b8;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.add-btn img {
+    width: 35px;
+    padding: 2px 5px;
+}
+
+.indicater {
+    display: block;
+    height: 20px;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.task-list li {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 2px 28px;
+    font-size: 16px;
+    color: #fff;
+    margin: 5px 0;
+    border-radius: 4px;
+    text-transform: capitalize;
+    background-color: #353535;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+}
+
+li span {
+    width: 89%;
+    padding: 10px 5px;
+    z-index: 10;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: absolute;
+    left: 1.5%;
+}
+
+.task-list .Delete,
+.Edit {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+    filter: invert(0.5);
+}
+
+.task-list .Delete {
+    right: 1%;
+}
+
+.task-list .Edit {
+    right: 7%;
+}
+
+.task-list li img {
+    display: none;
+}
+
+.task-list li:hover img {
+    display: inline-block;
+}
+
+.total-task {
+    display: flex;
+    gap: 10px;
+    flex-grow: 1;
+
+}
+
+.total-task span {
+    padding: 9px;
+    flex-grow: 1;
+    font-size: 16px;
+    text-align: center;
+    color: #dadada;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background-color: #252525;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.total-task .clear-btn {
+    padding: 11px 15px;
+    color: white;
+    font-size: 17px;
+    border: none;
+    border-radius: 4px;
+    background-color: #6928b8;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.add-btn:hover,
+.clear-btn:hover {
+    background-color: #510ca5;
+    transform: scale(1.03);
+    transition: ease-in-out 0.5s;
+}
+
+.input-box input:hover,
+.task-list li:hover,
+.total-task span:hover {
+    transform: scale(1.02);
+    transition: ease-in-out 0.5s;
+}
+
+.task-list img:hover {
+    filter: invert(0);
+}
+
+.done {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+    section {
+        width: 80vw;
+        padding: 15px;
+        margin: 10% auto;
+    }
+
+    .container {
+        width: 80vw;
+        padding: 15px;
+    }
+
+    .total-task {
+        flex-direction: column;
+    }
+
+    .task-list .Edit {
+        right: 8%;
+    }
+}
