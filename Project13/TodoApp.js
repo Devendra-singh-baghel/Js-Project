@@ -1,92 +1,126 @@
-const input = document.querySelector("input");
+const input = document.querySelector("textarea");
 const addBtn = document.querySelector(".add-btn");
 const taskList = document.querySelector(".task-list");
 const clearbtn = document.querySelector(".clear-btn");
 const indicater = document.querySelector(".indicater");
 const completed = document.querySelector(".completed");
 const pending = document.querySelector(".pending");
+const filterTask = document.querySelector(".filter-task");
 
 let completedTask = 0;
 let pendingTask = 0;
-completed.textContent = `Completed: ${completedTask}`;
-pending.textContent = `Pending: ${pendingTask}`;
 
+window.addEventListener('DOMContentLoaded', loadState);
+// Above line ensures that:-
+// loadState() runs after the HTML document is fully loaded and parsed
+// All DOM elements (like taskList, buttons, etc.) exist before we try to access them
+
+
+
+/****************************************** Create element ********************************************************************************/
 
 // Function to create elements
-function addNewTask(Task) {
-    const newLi = document.createElement('li');
-    const liText = document.createTextNode(Task);
-    const textSpan = document.createElement('span');
+function addNewTask(Task, isCompleted = false) {
 
-    const newCheckBox = document.createElement('input');
-    newCheckBox.type = 'checkbox';
-    newCheckBox.name = 'checktask';
-    newCheckBox.className = 'checktask';
+    const li = document.createElement('li');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'checktask';
+    checkbox.checked = isCompleted;
 
-    const trashIcon = document.createElement('img');
-    trashIcon.src = "Assets/trash.svg";
-    trashIcon.alt = 'Delete';
-    trashIcon.className = "Delete"
-    trashIcon.title = "Delete"
+    const span = document.createElement('span');
+    span.textContent = Task;
 
-    const editIcon = document.createElement('img');
-    editIcon.src = "Assets/edit.svg";
-    editIcon.alt = "Edit";
-    editIcon.className = "Edit";
-    editIcon.title = "Edit";
+    const editImg = document.createElement('img');
+    editImg.src = "Assets/edit.svg";
+    editImg.className = "Edit";
+    editImg.alt = "Edit";
 
-    textSpan.appendChild(liText);
-    newLi.appendChild(newCheckBox)
-    newLi.appendChild(textSpan);
-    newLi.appendChild(editIcon);
-    newLi.appendChild(trashIcon);
+    const deleteImg = document.createElement('img');
+    deleteImg.src = "Assets/trash.svg";
+    deleteImg.className = "Delete";
+    deleteImg.alt = "Delete";
 
-    taskList.appendChild(newLi);
+    if (isCompleted) {
+        li.classList.add('done');
+        completedTask++;
+    } else {
+        pendingTask++;
+    }
 
+    li.appendChild(checkbox);
+    li.appendChild(span);
+    li.appendChild(editImg);
+    li.appendChild(deleteImg);
+    taskList.appendChild(li);
+
+    updateCounts()
+    saveState();
 }
 
 
-/****************************************** Add new task by add button ********************************************************************************/
+/****************************************** Handle local storage ********************************************************************************/
+
+// function for add tasks in local storage
+function saveState() {
+    const tasks = [];
+    taskList.querySelectorAll("li").forEach(li => {
+        tasks.push({
+            text: li.querySelector("span").textContent,
+            completed: li.querySelector(".checktask").checked
+        });
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 
-//Event Listener on add button to add new task and show on screen
-addBtn.addEventListener('click', function (e) {
+// function for get tasks from local storage
+function loadState() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach(task => {
+        addNewTask(task.text, task.completed);
+    });
+    updateCounts();
+}
+
+
+/****************************************** Handle task count ********************************************************************************/
+
+//Update task count function
+function updateCounts() {
+    const checks = document.querySelectorAll('.checktask');
+    pendingTask = [...checks].filter(c => !c.checked).length;
+    completedTask = checks.length - pendingTask;
+    completed.textContent = `Completed: ${completedTask}`;
+    pending.textContent = `Pending: ${pendingTask}`;
+}
+
+/****************************************** Handle new task ********************************************************************************/
+
+function handleNewTasks(e) {
     const Task = input.value.trim();
     if (Task) {
         addNewTask(Task);
         input.value = "";
         indicater.textContent = "New Task Added";
         indicater.style.color = "#04dd1a";
-        pendingTask++;
-        pending.textContent = `Pending : ${pendingTask}`;
+        updateCounts();
     }
 
     setTimeout(() => {
         indicater.textContent = "";
     }, 2000);
-});
+}
 
-
-/****************************************** Add new task by pressing enter key ********************************************************************************/
-
+//Event Listener on add button to add new task and show on screen
+addBtn.addEventListener('click', handleNewTasks);
 
 //Event Listener on input field to add new task by pressing enter key
 input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
+        e.preventDefault();
 
-        const Task = input.value.trim();
-        if (Task) {
-            addNewTask(Task);
-            indicater.textContent = "New Task Added";
-            indicater.style.color = "#04dd1a";
-            input.value = "";
-            pendingTask++;
-            pending.textContent = `Pending : ${pendingTask}`;
-        }
-
-        setTimeout(() => {
-            indicater.textContent = "";
-        }, 2000);
+        handleNewTasks();
     }
 })
 
@@ -103,17 +137,12 @@ taskList.addEventListener('change', function (e) {
 
         if (e.target.checked) {
             li.classList.add("done");
-            pendingTask--;
-            completedTask++;
-            pending.textContent = `Pending : ${pendingTask}`;
-            completed.textContent = `Completed : ${completedTask}`;
+            updateCounts();
         } else {
             li.classList.remove("done");
-            pendingTask++;
-            completedTask--;
-            pending.textContent = `Pending : ${pendingTask}`;
-            completed.textContent = `Completed : ${completedTask}`;
+            updateCounts();
         }
+        saveState();
     }
 });
 
@@ -123,20 +152,14 @@ taskList.addEventListener('change', function (e) {
 
 // Remove task using event delegation by clicking on trash icon.
 taskList.addEventListener('click', function (e) {
-    if (e.target.tagName === "IMG" && e.target.className === "Delete") {
+    if (e.target.classList.contains("Delete")) {
         const li = e.target.parentElement;
-        const isCompleted = li.classList.contains("done");
 
-        li.remove();
-
-        if (isCompleted) {
-            completedTask--;
-        } else {
-            pendingTask--;
+        if (confirm("do you want delete this task?")) {
+            li.remove();
+            updateCounts();
+            saveState();
         }
-
-        completed.textContent = `Completed : ${completedTask}`;
-        pending.textContent = `Pending : ${pendingTask}`;
     }
 });
 
@@ -147,7 +170,7 @@ taskList.addEventListener('click', function (e) {
 //Event Listener for make task editable
 let currentEditableLi = null;
 taskList.addEventListener('click', function (e) {
-    if (e.target.tagName === "IMG" && e.target.className === "Edit") {
+    if (e.target.classList.contains("Edit")) {
         const textSpan = e.target.previousElementSibling;
         const checkmark = textSpan.previousElementSibling;
 
@@ -161,39 +184,65 @@ taskList.addEventListener('click', function (e) {
             textSpan.contentEditable = true;
             currentEditableLi = textSpan;
             textSpan.focus();
+
+            textSpan.addEventListener('blur', function () {
+                textSpan.contentEditable = false;
+                saveState();
+            });
+
+
+            textSpan.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    textSpan.contentEditable = false;
+                    saveState();
+                }
+            });
         }
-
-
-        // add Event Listener to detect clicks outside of li 
-        document.addEventListener('click', handleOutsideClick);
     }
 });
 
 
-// function for save eadited task when click outside of the li 
-function handleOutsideClick(e) {
+/****************************************** Filter tasks ********************************************************************************/
 
-    if (currentEditableLi && !currentEditableLi.closest('li').contains(e.target)) {
-        currentEditableLi.contentEditable = false;
-        currentEditableLi = null;
+// function for show filtered tasks 
+function handleFilter() {
+    const filter = filterTask.value;
+    let list = taskList.querySelectorAll('li');
 
-        // remove Event Listener after saving edit for avoiding multiple listeners
-        document.removeEventListener('click', handleOutsideClick);
-    }
+    list.forEach((li) => {
 
+        li.style.display = 'flex';
+
+        switch (filter) {
+
+            case 'complete':
+                if (!li.classList.contains("done")) {
+                    li.style.display = 'none';
+                    pending.style.display = 'none';
+                }
+                break;
+
+            case 'pending':
+                if (li.classList.contains("done")) {
+                    li.style.display = 'none';
+                    pending.style.display = 'block';
+                    completed.style.display = 'none';
+                }
+                break;
+
+            default:
+                li.style.display = 'flex';
+                pending.style.display = 'block';
+                completed.style.display = 'block';
+                break;
+        }
+
+    });
 }
 
+filterTask.addEventListener('change', handleFilter);
 
-//Event Listener for save eadited task by pressing enter key
-taskList.addEventListener('keydown', function (e) {
-    if (currentEditableLi && e.key === "Enter") {
-        e.preventDefault();
-        currentEditableLi.contentEditable = false;
-        currentEditableLi = null;
-
-        document.removeEventListener('click', handleOutsideClick);
-    }
-})
 
 
 /****************************************** Clear all tasks in one click ********************************************************************************/
@@ -204,10 +253,8 @@ function clearAllTask() {
 
     if (taskList.children.length > 0) {
         taskList.innerHTML = "";
-        completedTask = 0;
-        pendingTask = 0;
-        pending.textContent = `Pending : ${pendingTask}`;
-        completed.textContent = `Completed : ${completedTask}`;
+        updateCounts();
+        saveState();
         indicater.textContent = "All Tasks Cleared!";
         indicater.style.color = "red";
         setTimeout(() => {

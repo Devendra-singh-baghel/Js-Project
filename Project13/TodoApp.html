@@ -9,28 +9,49 @@
 </head>
 
 <body>
+    <div class="navbar">
+        <nav>
+            <div class="logo">Todo-App</div>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contact</li>
+            </ul>
+        </nav>
+    </div>
     <section>
-        <div class="container">
-            <div class="heading">
-                <h1>Todo App</h1>
-            </div>
-            <div class="input-box">
-                <input type="text" name="task" id="task" placeholder="Enter task" autocomplete="off">
-                <button class="add-btn" title="Add Task"><img src="Assets/plus.svg" alt="Add" srcset=""></button>
-            </div>
-            <div class="ul-box">
-                <span class="indicater"></span>
-                <ul class="task-list">
-                    
-                </ul>
-            </div>
+        <div class="outer">
+            <div class="container">
+                <div class="heading">
+                    <h1>Todo App</h1>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" name="task" id="task" placeholder="Enter task" autocomplete="off"></textarea>
+                    <button class="add-btn" title="Add Task"><img src="Assets/plus.svg" alt="Add" srcset=""></button>
+                </div>
 
-            <div class="total-task">
-                <span class="completed"></span>
-                <span class="pending"></span>
-                <button class="clear-btn">Clear All</button>
-            </div>
+                <div class="filter-box">
+                    <label for="filter-task">Filter: </label>
+                    <select name="filter-task" id="filter-task" class="filter-task">
+                        <option value="all">All</option>
+                        <option value="complete">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="ul-box">
+                    <span class="indicater"></span>
+                    <ul class="task-list">
 
+                    </ul>
+                </div>
+
+                <div class="total-task">
+                    <span class="completed"></span>
+                    <span class="pending"></span>
+                    <button class="clear-btn">Clear All</button>
+                </div>
+            </div>
         </div>
     </section>
     <script src="TodoApp.js"></script>

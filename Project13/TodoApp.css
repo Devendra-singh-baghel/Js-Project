@@ -11,13 +11,47 @@ body {
     background: linear-gradient(180deg, #adc4e9, #2c2f88);
 }
 
+.navbar {
+    background-color: #272e3482;
+    position: sticky;
+    top: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+    padding: 10px;
+    font-weight: 500;
+    color: #e4e6e7;
+}
+
+nav .logo {
+    font-size: 20px;
+}
+
+nav ul {
+    display: flex;
+    gap: 30%;
+}
+
+ul li {
+    list-style: none;
+}
+
 section {
     display: flex;
+    width: 100vw;
+}
+
+.outer {
+    display: flex;
+    flex-direction: column;
     flex-shrink: 1;
-    justify-content: center;
-    align-items: center;
-    width: 490px;
-    margin: 5% auto;
+    max-width: 100vw;
+    width: 700px;
+    margin: 2% auto;
     padding: 15px;
     background-color: #728998;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
@@ -28,9 +62,7 @@ section {
     flex-shrink: 1;
     flex-direction: column;
     justify-content: center;
-    width: 450px;
     padding: 20px;
-    margin: auto;
     background-color: #555;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
 }
@@ -45,13 +77,14 @@ section {
 
 .input-box {
     display: flex;
+    height: 54px;
     gap: 6px;
 }
 
-.input-box input {
+.input-box textarea {
     width: 83%;
     flex-grow: 1;
-    padding: 9px 10px;
+    padding: 16px 45px 18px 15px;
     font-size: 17px;
     color: #dadada;
     border: none;
@@ -59,14 +92,19 @@ section {
     background-color: #303030;
     outline: none;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    resize: none;
 }
 
-.input-box input::placeholder {
+.input-box textarea::placeholder {
     color: #919090;
 }
 
-.input-box input:focus {
+.input-box textarea:focus {
     background-color: #252525;
+}
+
+textarea::-webkit-scrollbar {
+    display: none;
 }
 
 .input-box .add-btn {
@@ -82,11 +120,29 @@ section {
     padding: 2px 5px;
 }
 
+.filter-box {
+    display: flex;
+    gap: 10px;
+    padding: 20px 10px;
+    font-weight: 500;
+    color: #fff;
+    font-size: 20px;
+}
+
+.filter-box select {
+    font-size: 16px;
+    text-align: center;
+    padding: 5px;
+    background-color: #353535;
+    color: #fff;
+    outline: none;
+}
+
 .indicater {
     display: block;
     height: 20px;
     text-align: center;
-    margin-top: 5px;
+    margin: 5px auto;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
@@ -103,7 +159,7 @@ section {
     display: flex;
     align-items: center;
     list-style: none;
-    padding: 2px 28px;
+    padding: 2px 80px 2px 37px;
     font-size: 16px;
     color: #fff;
     margin: 5px 0;
@@ -116,7 +172,7 @@ section {
 }
 
 li span {
-    width: 89%;
+    width: 100%;
     padding: 10px 5px;
     z-index: 10;
 }
@@ -132,12 +188,14 @@ input[type="checkbox"] {
 
 .task-list .Delete,
 .Edit {
+    background-color: #6928b8;
+    padding: 5px;
+    border-radius: 4px;
     width: 18px;
     height: 18px;
     cursor: pointer;
     position: absolute;
     z-index: 10;
-    filter: invert(0.5);
 }
 
 .task-list .Delete {
@@ -145,7 +203,7 @@ input[type="checkbox"] {
 }
 
 .task-list .Edit {
-    right: 7%;
+    right: 6%;
 }
 
 .task-list li img {
@@ -177,7 +235,7 @@ input[type="checkbox"] {
 }
 
 .total-task .clear-btn {
-    padding: 11px 15px;
+    padding: 11px 25px;
     color: white;
     font-size: 17px;
     border: none;
@@ -204,7 +262,8 @@ input[type="checkbox"] {
 }
 
 .task-list img:hover {
-    filter: invert(0);
+    background-color: #510ca5;
+    ;
 }
 
 .done {
@@ -214,17 +273,20 @@ input[type="checkbox"] {
 
 
 
+@media screen and (max-width: 700px) {
 
-@media screen and (max-width: 600px) {
-    section {
-        width: 80vw;
-        padding: 15px;
-        margin: 10% auto;
+    .navbar {
+        width: 100%;
     }
 
-    .container {
-        width: 80vw;
+    nav {
+        width: 60%;
+    }
+
+    section {
+        width: 95vw;
         padding: 15px;
+        margin: 0;
     }
 
     .total-task {
