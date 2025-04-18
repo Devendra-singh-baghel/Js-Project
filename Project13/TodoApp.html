@@ -24,7 +24,9 @@
             <div class="container">
                 <div class="heading">
                     <h1>Todo App</h1>
+                    <button class="theme-box"></button>
                 </div>
+
                 <div class="input-box">
                     <textarea type="text" name="task" id="task" placeholder="Enter task" autocomplete="off"></textarea>
                     <button class="add-btn" title="Add Task"><img src="Assets/plus.svg" alt="Add" srcset=""></button>
@@ -54,6 +56,13 @@
             </div>
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+        new Sortable(document.querySelector('.task-list'), {
+            animation: 150,
+        });
+    </script>
     <script src="TodoApp.js"></script>
 </body>
 

@@ -20,7 +20,8 @@ body {
 nav {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    align-items: center;
+    width: 60%;
     margin: auto;
     padding: 10px;
     font-weight: 500;
@@ -33,27 +34,21 @@ nav .logo {
 
 nav ul {
     display: flex;
-    gap: 30%;
+    justify-content: space-between;
+    width: 50%;
 }
 
 ul li {
     list-style: none;
 }
 
-section {
-    display: flex;
-    width: 100vw;
-}
-
 .outer {
     display: flex;
     flex-direction: column;
     flex-shrink: 1;
-    max-width: 100vw;
     width: 700px;
-    margin: 2% auto;
+    margin: 3% auto;
     padding: 15px;
-    background-color: #728998;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
@@ -63,16 +58,32 @@ section {
     flex-direction: column;
     justify-content: center;
     padding: 20px;
-    background-color: #555;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 .heading {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
     font-size: 25px;
-    color: #e8e4e4;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.theme-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    padding: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #787878;
+    border-radius: 20px;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
 }
 
 .input-box {
@@ -86,18 +97,13 @@ section {
     flex-grow: 1;
     padding: 16px 45px 18px 15px;
     font-size: 17px;
-    color: #dadada;
     border: none;
     border-radius: 4px;
-    background-color: #303030;
     outline: none;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     resize: none;
 }
 
-.input-box textarea::placeholder {
-    color: #919090;
-}
 
 .input-box textarea:focus {
     background-color: #252525;
@@ -122,19 +128,17 @@ textarea::-webkit-scrollbar {
 
 .filter-box {
     display: flex;
+    align-items: center;
     gap: 10px;
     padding: 20px 10px;
     font-weight: 500;
-    color: #fff;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .filter-box select {
     font-size: 16px;
     text-align: center;
     padding: 5px;
-    background-color: #353535;
-    color: #fff;
     outline: none;
 }
 
@@ -146,7 +150,6 @@ textarea::-webkit-scrollbar {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
-    text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
 }
 
 .task-list {
@@ -161,7 +164,6 @@ textarea::-webkit-scrollbar {
     list-style: none;
     padding: 2px 80px 2px 37px;
     font-size: 16px;
-    color: #fff;
     margin: 5px 0;
     border-radius: 4px;
     text-transform: capitalize;
@@ -226,11 +228,9 @@ input[type="checkbox"] {
     flex-grow: 1;
     font-size: 16px;
     text-align: center;
-    color: #dadada;
     border: none;
     border-radius: 4px;
     outline: none;
-    background-color: #252525;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -273,20 +273,19 @@ input[type="checkbox"] {
 
 
 
+
+
 @media screen and (max-width: 700px) {
 
-    .navbar {
-        width: 100%;
-    }
-
     nav {
-        width: 60%;
+        width: 94%;
+        margin: auto;
     }
 
-    section {
-        width: 95vw;
+    .outer {
+        max-width: 100vw;
+        width: 94%;
         padding: 15px;
-        margin: 0;
     }
 
     .total-task {
@@ -297,3 +296,79 @@ input[type="checkbox"] {
         right: 8%;
     }
 }
+
+
+
+
+
+/* Handle light-mode transitions */
+body.light-mode .container,
+body.light-mode textarea,
+body.light-mode .task-list li,
+body.light-mode .total-task span,
+body.light-mode .filter-task {
+    background-color: #f5f5ffae !important;
+    color: #000 !important;
+    transition: all 0.5s ease;
+}
+
+body.light-mode .theme-box{
+    background-color: #353535 !important;
+    color: #e8e4e4 !important;
+}
+
+body.light-mode .outer{
+    background-color: #01143aa1 !important;
+}
+
+body.light-mode hr{
+    border: 1px solid #353535;
+}
+
+body.light-mode textarea::placeholder{
+    color: #686868;
+}
+
+
+
+/* Handle dark-mode transitions */
+body.dark-mode textarea,
+body.dark-mode .task-list li,
+body.dark-mode .total-task span,
+body.dark-mode .filter-task {
+    background-color: #353535 !important;
+    color: #e8e4e4 !important;
+    transition: all 0.5s ease;
+}
+
+body.dark-mode .container{
+    background-color: #555 !important;
+}
+
+body.dark-mode .outer{
+    background-color: #728998 !important;
+}
+
+body.dark-mode h1,
+body.dark-mode label{
+    color: #e8e4e4 !important;
+}
+
+body.dark-mode textarea::placeholder{
+    color: #838383;
+}
+
+body.dark-mode .theme-box{
+    background-color: #f5f5ff7f !important;
+    color: #000 !important;
+}
+
+
+.sortable-chosen {
+    transform: scale(1.1);
+  }
+
+  .sortable-ghost {
+    opacity: 0.3;
+  }
+

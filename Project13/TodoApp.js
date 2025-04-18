@@ -6,9 +6,11 @@ const indicater = document.querySelector(".indicater");
 const completed = document.querySelector(".completed");
 const pending = document.querySelector(".pending");
 const filterTask = document.querySelector(".filter-task");
+const theme = document.querySelector(".theme-box");
 
 let completedTask = 0;
 let pendingTask = 0;
+
 
 window.addEventListener('DOMContentLoaded', loadState);
 // Above line ensures that:-
@@ -35,17 +37,28 @@ function addNewTask(Task, isCompleted = false) {
     editImg.src = "Assets/edit.svg";
     editImg.className = "Edit";
     editImg.alt = "Edit";
+    editImg.title = "Edit";
 
     const deleteImg = document.createElement('img');
     deleteImg.src = "Assets/trash.svg";
     deleteImg.className = "Delete";
     deleteImg.alt = "Delete";
+    deleteImg.title = "Delete";
 
     if (isCompleted) {
         li.classList.add('done');
         completedTask++;
     } else {
         pendingTask++;
+    }
+
+    const currentMode = localStorage.getItem("currentMode") || "Dark";
+    if (currentMode === "Light") {
+        li.style.backgroundColor = "#f5f5ff7f";
+        li.style.color = "#000";
+    } else {
+        li.style.backgroundColor = "#353535";
+        li.style.color = "#e8e4e4";
     }
 
     li.appendChild(checkbox);
@@ -67,7 +80,7 @@ function saveState() {
     taskList.querySelectorAll("li").forEach(li => {
         tasks.push({
             text: li.querySelector("span").textContent,
-            completed: li.querySelector(".checktask").checked
+            completed: li.querySelector(".checktask").checked,
         });
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -76,10 +89,22 @@ function saveState() {
 
 // function for get tasks from local storage
 function loadState() {
+    //Load tasks
     const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.forEach(task => {
         addNewTask(task.text, task.completed);
     });
+
+    // Load filter value from localStorage
+    const savedFilter = localStorage.getItem("currentFilter") || "all";
+    filterTask.value = savedFilter; // Set the dropdown value
+    handleFilter(); // Apply the filter immediately after loading
+
+
+    // Load theme from localStorage
+    const savedMode = localStorage.getItem("currentMode") || "Dark";
+    theme.textContent = savedMode;
+    switchTheme();
     updateCounts();
 }
 
@@ -103,7 +128,11 @@ function handleNewTasks(e) {
         addNewTask(Task);
         input.value = "";
         indicater.textContent = "New Task Added";
-        indicater.style.color = "#04dd1a";
+        if(theme.textContent === "Dark"){
+            indicater.style.color = "#0f9600";
+        }else{
+            indicater.style.color = "#04dd1a";
+        }
         updateCounts();
     }
 
@@ -208,7 +237,8 @@ taskList.addEventListener('click', function (e) {
 // function for show filtered tasks 
 function handleFilter() {
     const filter = filterTask.value;
-    let list = taskList.querySelectorAll('li');
+    localStorage.setItem("currentFilter", filter);
+    const list = taskList.querySelectorAll('li');
 
     list.forEach((li) => {
 
@@ -220,6 +250,7 @@ function handleFilter() {
                 if (!li.classList.contains("done")) {
                     li.style.display = 'none';
                     pending.style.display = 'none';
+                    completed.style.display = 'block';
                 }
                 break;
 
@@ -271,4 +302,41 @@ function clearAllTask() {
 }
 
 clearbtn.addEventListener('click', clearAllTask);
+
+
+
+/****************************************** Switch theme Dark/Light ********************************************************************************/
+
+
+function switchDarkMode() {
+    document.body.classList.add('dark-mode');
+    document.body.classList.remove('light-mode');
+
+    theme.textContent = "Light";
+}
+
+function switchLightMode() {
+    document.body.classList.remove('dark-mode');
+    document.body.classList.add('light-mode');
+
+    theme.textContent = "Dark";
+}
+
+
+
+function switchTheme() {
+
+    if (theme.textContent === "Light") {
+        switchLightMode();
+        localStorage.setItem("currentMode", "Light");
+    }
+    else {
+        switchDarkMode()
+        localStorage.setItem("currentMode", "Dark");
+    }
+}
+
+
+theme.addEventListener('click', switchTheme);
+
 
