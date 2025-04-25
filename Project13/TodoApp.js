@@ -67,7 +67,7 @@ function addNewTask(Task, isCompleted = false) {
     li.appendChild(deleteImg);
     taskList.appendChild(li);
 
-    updateCounts()
+    updateCounts();
     saveState();
 }
 
@@ -128,9 +128,9 @@ function handleNewTasks(e) {
         addNewTask(Task);
         input.value = "";
         indicater.textContent = "New Task Added";
-        if(theme.textContent === "Dark"){
+        if (theme.textContent === "Dark") {
             indicater.style.color = "#0f9600";
-        }else{
+        } else {
             indicater.style.color = "#04dd1a";
         }
         updateCounts();
@@ -236,39 +236,51 @@ taskList.addEventListener('click', function (e) {
 
 // function for show filtered tasks 
 function handleFilter() {
+
+    if (!filterTask || !taskList || !pending || !completed) return;
+
     const filter = filterTask.value;
     localStorage.setItem("currentFilter", filter);
     const list = taskList.querySelectorAll('li');
 
+
+
+    switch (filter) {
+        case 'complete':
+            pending.style.display = 'none';
+            completed.style.display = 'block';
+            break;
+
+        case 'pending':
+            pending.style.display = 'block';
+            completed.style.display = 'none';
+            break;
+
+        default:
+            pending.style.display = 'block';
+            completed.style.display = 'block';
+            break;
+    }
+
+
+
     list.forEach((li) => {
+        const isDone = li.classList.contains("done");
 
-        li.style.display = 'flex';
-
+        // Set task visibility based on filter
         switch (filter) {
-
             case 'complete':
-                if (!li.classList.contains("done")) {
-                    li.style.display = 'none';
-                    pending.style.display = 'none';
-                    completed.style.display = 'block';
-                }
+                li.style.display = isDone ? 'flex' : 'none';
                 break;
 
             case 'pending':
-                if (li.classList.contains("done")) {
-                    li.style.display = 'none';
-                    pending.style.display = 'block';
-                    completed.style.display = 'none';
-                }
+                li.style.display = !isDone ? 'flex' : 'none';
                 break;
 
             default:
                 li.style.display = 'flex';
-                pending.style.display = 'block';
-                completed.style.display = 'block';
                 break;
         }
-
     });
 }
 
